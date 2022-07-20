@@ -1,5 +1,6 @@
 import * as React from 'react'
 import styled from 'styled-components'
+import logo from '../../../assets/logo.png'
 
 const HeaderWrapper = styled.header`
   position: relative;
@@ -7,16 +8,19 @@ const HeaderWrapper = styled.header`
   height: 6rem;
   max-height: 6rem;
   width: 100%;
-  background-color: rgba(9, 0, 0, 0.82);
   color: #fff;
+  border-bottom: 1px solid #000;
+  & img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+  }
 `
 
 const HeaderBrand = styled.div`
   width: 7rem;
   height: 100%;
-  border: 1px solid #eccbd7;
   margin-right: 2rem;
-  padding: 1rem;
 `
 
 const HeaderContent = styled.div`
@@ -28,7 +32,9 @@ const HeaderContent = styled.div`
 export const Header = () => {
   return (
     <HeaderWrapper>
-      <HeaderBrand>Brand</HeaderBrand>
+      <HeaderBrand>
+        <img src={logo} alt="" />
+      </HeaderBrand>
       <HeaderContent>CONTENT</HeaderContent>
     </HeaderWrapper>
   )

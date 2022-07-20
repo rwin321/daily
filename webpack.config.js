@@ -7,6 +7,14 @@ module.exports = {
   module: {
     rules: [
       {
+        test: /\.(png|jpe?g|gif)$/i,
+        use: [
+          {
+            loader: 'file-loader',
+          },
+        ],
+      },
+      {
         test: /.(ts|tsx)$/,
         exclude: /node_modules/,
         use: 'ts-loader',
@@ -37,6 +45,7 @@ module.exports = {
 
   resolve: {
     extensions: ['.tsx', '.ts', '.js'],
+    modules: [path.resolve(__dirname, 'src'), 'node_modules'],
   },
 
   plugins: [
