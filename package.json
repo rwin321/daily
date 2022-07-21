@@ -5,7 +5,9 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "repository": {
     "type": "git",
@@ -17,7 +19,7 @@
   "bugs": {
     "url": "https://github.com/rwin321/daily/issues"
   },
-  "homepage": "https://github.com/rwin321/daily#readme",
+  "homepage": "https://rwin321.github.io/daily/",
   "dependencies": {
     "@babel/plugin-proposal-export-default-from": "^7.18.6",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
