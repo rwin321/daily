@@ -33,10 +33,16 @@ export const listSlice = createSlice({
         i.id === action.payload ? { ...i, isChecked: !i.isChecked } : i
       )
     },
+    moveListItemToTop: (state, action: PayloadAction<string>) => {
+      state.list = state.list
+        .filter((i) => i.id === action.payload)
+        .concat(state.list.filter((i) => i.id !== action.payload))
+    },
   },
 })
 
-export const { addListItem, deleteListItem, checkListItem } = listSlice.actions
+export const { addListItem, deleteListItem, checkListItem, moveListItemToTop } =
+  listSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectList = (state: RootState) => state.todosList.list

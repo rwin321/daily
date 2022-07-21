@@ -3,17 +3,24 @@ import styled from 'styled-components'
 import ListItem from './ListItem'
 import { useAppSelector } from '../../hooks/redux'
 
-const Wrapper = styled.ul`
+const Wrapper = styled.section`
   position: relative;
   width: 49%;
   height: 80%;
   max-height: 80vh;
-  overflow-y: auto;
+  overflow-y: hidden;
   margin-left: 1rem;
   padding: 2rem;
   background-color: whitesmoke;
   border-radius: 1rem;
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+`
+
+const ListWrapper = styled.ul`
+  position: relative;
+  height: 100%;
+  overflow: auto;
+  margin-top: 1rem;
   &::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: 1px solid slategrey;
@@ -27,6 +34,17 @@ const Wrapper = styled.ul`
   }
 `
 
+const StatusBar = styled.aside`
+  position: absolute;
+  width: 6rem;
+  top: 1rem;
+  right: 1rem;
+  background-color: #0862cb;
+  text-align: center;
+  border-radius: 5px;
+  z-index: 999;
+`
+
 interface Props {}
 
 export const List = (props: Props) => {
@@ -34,14 +52,19 @@ export const List = (props: Props) => {
 
   return (
     <Wrapper>
-      {list?.map((li) => (
-        <ListItem
-          key={li.id}
-          id={li.id}
-          title={li.title}
-          isChecked={li.isChecked}
-        />
-      ))}
+      <StatusBar>
+        to do left: {list.filter((i) => !i.isChecked).length}
+      </StatusBar>
+      <ListWrapper>
+        {list?.map((li) => (
+          <ListItem
+            key={li.id}
+            id={li.id}
+            title={li.title}
+            isChecked={li.isChecked}
+          />
+        ))}
+      </ListWrapper>
     </Wrapper>
   )
 }

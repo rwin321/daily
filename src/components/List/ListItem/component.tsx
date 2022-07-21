@@ -3,15 +3,24 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { useAppDispatch } from '../../../hooks/redux'
-import { deleteListItem, checkListItem } from '../listSlice'
+import { deleteListItem, checkListItem, moveListItemToTop } from '../listSlice'
+import { setPause } from '../../../services/async'
 
 const Item = styled.li`
   position: relative;
   padding-top: 0.6rem;
   font-size: 1.25rem;
   font-family: 'Roboto Light', serif;
-  & h3:hover {
-    cursor: pointer;
+
+  & h3 {
+    &:hover {
+      cursor: pointer;
+      box-shadow: 2px 2px 2px 5px rgba(0, 0, 0, 0.62);
+      transition: ease-in-out 0.35s;
+    }
+    &:active {
+      background-color: #000;
+    }
   }
 `
 
@@ -39,8 +48,12 @@ export const ListItem = (props: Props) => {
     dispatch(deleteListItem(props.id))
   }
 
-  const handleCheckItem = () => {
-    dispatch(checkListItem(props.id))
+  const handleCheckItem = async () => {
+    await dispatch(checkListItem(props.id))
+    if (!props.isChecked) {
+      await setPause(1800)
+      await dispatch(moveListItemToTop(props.id))
+    }
   }
 
   return (
