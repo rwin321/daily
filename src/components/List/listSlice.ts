@@ -38,7 +38,7 @@ export const listSlice = createSlice({
       const filteredArray = state.list.filter((i) => i.id !== action.payload)
       const lastCheckedId = findLastArrIndex(state.list, 'isChecked', true)
       const [target] = state.list.filter((i) => i.id === action.payload)
-      if (lastCheckedId !== -1) {
+      if (lastCheckedId !== -1 && lastCheckedId !== 0) {
         state.list = [
           ...filteredArray.slice(0, lastCheckedId),
           { ...target, isChecked: false },

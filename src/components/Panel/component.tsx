@@ -28,7 +28,9 @@ const PanelSubmit = styled.button`
   font-size: 1.35rem;
   cursor: pointer;
   &:hover {
-    background-color: whitesmoke;
+    &:not(:disabled) {
+      background-color: whitesmoke;
+    }
   }
 `
 
@@ -45,13 +47,16 @@ export const Panel = (props: Props) => {
     }
 
     dispatch(addListItem(payload))
+    setInputValue('')
   }
 
   return (
     <PanelWrapper>
       <h2>Panel</h2>
-      <PanelInput setInputValue={setInputValue} />
-      <PanelSubmit onClick={handleAddItem}>add todo</PanelSubmit>
+      <PanelInput setInputValue={setInputValue} inputValue={inputValue} />
+      <PanelSubmit onClick={handleAddItem} disabled={!inputValue}>
+        add item
+      </PanelSubmit>
     </PanelWrapper>
   )
 }

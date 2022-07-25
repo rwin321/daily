@@ -3,10 +3,11 @@ import Input from '../../Common/Input'
 
 interface Props {
   setInputValue: (e: string) => void
+  inputValue: string
 }
 
 export const PanelInput = (props: Props) => {
-  const { setInputValue } = props
+  const { setInputValue, inputValue } = props
 
   return (
     <div>
@@ -15,6 +16,7 @@ export const PanelInput = (props: Props) => {
         onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
           setInputValue(e.target.value)
         }
+        value={inputValue}
         placeholder="type todo"
       />
     </div>
