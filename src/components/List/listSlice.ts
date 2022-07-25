@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import type { PayloadAction } from '@reduxjs/toolkit'
 import type { RootState } from '../../store'
+import { findLastArrIndex } from '../../services/array'
 
 // Define a type for the slice state
 interface ListItem {
@@ -33,6 +34,18 @@ export const listSlice = createSlice({
         i.id === action.payload ? { ...i, isChecked: !i.isChecked } : i
       )
     },
+    unCheckListItem: (state, action: PayloadAction<string>) => {
+      const filteredArray = state.list.filter((i) => i.id !== action.payload)
+      const lastCheckedId = findLastArrIndex(state.list, 'isChecked', true)
+      const [target] = state.list.filter((i) => i.id === action.payload)
+      if (lastCheckedId !== -1) {
+        state.list = [
+          ...filteredArray.slice(0, lastCheckedId),
+          { ...target, isChecked: false },
+          ...filteredArray.slice(lastCheckedId),
+        ]
+      }
+    },
     moveListItemToTop: (state, action: PayloadAction<string>) => {
       state.list = state.list
         .filter((i) => i.id === action.payload)
@@ -41,8 +54,13 @@ export const listSlice = createSlice({
   },
 })
 
-export const { addListItem, deleteListItem, checkListItem, moveListItemToTop } =
-  listSlice.actions
+export const {
+  addListItem,
+  deleteListItem,
+  checkListItem,
+  moveListItemToTop,
+  unCheckListItem,
+} = listSlice.actions
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectList = (state: RootState) => state.todosList.list

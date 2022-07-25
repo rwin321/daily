@@ -9,7 +9,6 @@ const HeaderWrapper = styled.header`
   max-height: 6rem;
   width: 100%;
   color: #fff;
-  border-bottom: 1px solid #000;
   & img {
     width: 100%;
     height: 100%;

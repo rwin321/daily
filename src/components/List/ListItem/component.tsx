@@ -3,7 +3,12 @@ import styled from 'styled-components'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faClose } from '@fortawesome/free-solid-svg-icons'
 import { useAppDispatch } from '../../../hooks/redux'
-import { deleteListItem, checkListItem, moveListItemToTop } from '../listSlice'
+import {
+  deleteListItem,
+  checkListItem,
+  moveListItemToTop,
+  unCheckListItem,
+} from '../listSlice'
 import { setPause } from '../../../services/async'
 
 const Item = styled.li`
@@ -13,13 +18,34 @@ const Item = styled.li`
   font-family: 'Roboto Light', serif;
 
   & h3 {
+    padding-left: 0.5rem;
+
     &:hover {
       cursor: pointer;
-      box-shadow: 2px 2px 2px 5px rgba(0, 0, 0, 0.62);
       transition: ease-in-out 0.35s;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 10px;
+        height: 1px;
+        background-color: #000;
+      }
+
+      &::before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 1px;
+        height: 10px;
+        background-color: #000;
+      }
     }
+
     &:active {
-      background-color: #000;
+      background-color: rgba(0, 0, 0, 0.51);
     }
   }
 `
@@ -51,8 +77,11 @@ export const ListItem = (props: Props) => {
   const handleCheckItem = async () => {
     await dispatch(checkListItem(props.id))
     if (!props.isChecked) {
-      await setPause(1800)
+      await setPause(1000)
       await dispatch(moveListItemToTop(props.id))
+    } else {
+      await setPause(1000)
+      await dispatch(unCheckListItem(props.id))
     }
   }
 

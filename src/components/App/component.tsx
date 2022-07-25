@@ -14,8 +14,9 @@ const AppContent = styled.main`
   align-items: center;
 
   &:hover {
-    transition: ease-in-out 0.45s;
+    transition: ease-out 0.4s;
     background-color: rgba(51, 110, 185, 0.56);
+    border-top: 3px solid #000;
   }
 `
 
